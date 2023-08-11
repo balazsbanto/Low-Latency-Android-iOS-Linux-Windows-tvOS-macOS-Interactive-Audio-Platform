@@ -9,6 +9,8 @@ import android.view.View;
 import android.util.Log;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.EditText;
+
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Files under res/raw are not zipped, just copied into the APK.
         // Get the offset and length to know where our file is located.
-        AssetFileDescriptor fd = getResources().openRawResourceFd(R.raw.track);
+        AssetFileDescriptor fd = getResources().openRawResourceFd(R.raw.sample1);
         int fileOffset = (int)fd.getStartOffset();
         int fileLength = (int)fd.getLength();
         try {
@@ -56,6 +58,32 @@ public class MainActivity extends AppCompatActivity {
         };
         handler = new Handler();
         handler.postDelayed(runnable, 40);
+        setOrigBpmUI();
+        setPlaybackRateUI();
+    }
+
+    public void setPlaybackRateUI() {
+        Button b = findViewById(R.id.setPlaybackButton);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText editText = findViewById(R.id.playbackEditText);
+                double value = Double.parseDouble(editText.getText().toString());
+                nativeSetPlaybackRate(value);
+            }
+        });
+    }
+
+    public void setOrigBpmUI() {
+        Button b = findViewById(R.id.setOrigBpmButton);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText editText = findViewById(R.id.bpmEditText);
+                int value = Integer.parseInt(editText.getText().toString());
+                nativeSetOrigBpm(value);
+            }
+        });
     }
 
     public void UI_update() {
@@ -97,6 +125,9 @@ public class MainActivity extends AppCompatActivity {
     private native void onForeground();
     private native void onBackground();
     private native void Cleanup();
+
+    private native void nativeSetPlaybackRate(double playbackRate);
+    private native void nativeSetOrigBpm(int origBpm);
 
     private boolean playing = false;
     private Handler handler;

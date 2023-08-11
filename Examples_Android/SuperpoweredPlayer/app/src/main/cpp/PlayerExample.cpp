@@ -68,6 +68,7 @@ Java_com_superpowered_playerexample_MainActivity_OpenFileFromAPK (
 ) {
     const char *str = env->GetStringUTFChars(path, 0);
     player->open(str, offset, length);
+    player->loopOnEOF = true;
     env->ReleaseStringUTFChars(path, str);
 
     // open file from any path: player->open("file system path to file");
@@ -122,4 +123,17 @@ extern "C" JNIEXPORT void
 Java_com_superpowered_playerexample_MainActivity_Cleanup(JNIEnv * __unused env, jobject __unused obj) {
     delete audioIO;
     delete player;
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_superpowered_playerexample_MainActivity_nativeSetPlaybackRate(JNIEnv *env, jobject thiz,
+                                                                       jdouble playback_rate) {
+    player->playbackRate = playback_rate;
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_superpowered_playerexample_MainActivity_nativeSetOrigBpm(JNIEnv *env, jobject thiz,
+                                                                  jint orig_bpm) {
+    player->originalBPM = orig_bpm;
 }

@@ -4,7 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="15dp"
     tools:context="com.superpowered.playerexample.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toTopOf="@id/playbackContainer">
+
+        <TextView
+            android:id="@+id/bpmLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Original bpm"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/bpmEditText"
+            android:layout_width="100dp"
+            android:inputType="number"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/setOrigBpmButton"
+            android:layout_width="wrap_content"
+            android:text="Set"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/playbackContainer"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/playPause">
+
+        <TextView
+            android:id="@+id/playbackLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Playback rate"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/playbackEditText"
+            android:layout_width="100dp"
+            android:inputType = "numberDecimal"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/setPlaybackButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Set" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/playPause"
